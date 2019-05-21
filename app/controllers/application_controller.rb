@@ -1,7 +1,13 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+    protect_from_forgery with: :exception
 
-  def hello
-    render html: "Hiếu Óc Chó, đánh bài dở nhưng được cái hay gâu gâu :)"
-  end
+    include SessionsHelper
+
+    before_action :require_login
+
+    def require_login
+        unless logged_in?
+            redirect_to login_path
+        end
+    end
 end
